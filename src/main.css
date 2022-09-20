@@ -1,0 +1,153 @@
+#app {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+  
+    font-weight: normal;
+  }
+  
+  /* color palette from <https://github.com/vuejs/theme> */
+  :root {
+      --main-dark-bg: #212c32;
+      --main-white: #ece8e2;
+      --main-hl-light: #93b1c4;
+      --main-hl-dark: #0c4378;
+      font-family: Inter, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+        'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  }
+    
+  *,
+  *::before,
+  *::after {
+      box-sizing: border-box;
+      margin: 0;
+      position: relative;
+      font-weight: normal;
+  }
+  
+  body {
+      min-height: 100vh;
+      color: var(--main-white);
+      background: var(--main-dark-bg);
+      transition: color 0.5s, background-color 0.5s;
+      line-height: 1.6;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+      'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      font-size: 15px;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1 {
+      margin-bottom: 20px;
+      font-weight: bold;
+  }
+  
+  .text-input {
+      border: none;
+      border-radius: 6px;
+      height: 25px;
+      background-color: var(--main-white);
+      margin-bottom: 10px;
+  } .text-input:focus {
+      outline: 2px solid var(--main-hl-light);
+  }
+  
+  .submit-button{
+      height: 25px;
+      margin-right: 0.5em;
+      background-color: var(--main-white);
+      color: var(--main-dark-bg);
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      overflow: hidden;
+      transition-property: background-color, color;
+      transition-duration: 1s;
+      transition-timing-function: ease;
+      
+  }
+  .submit-button:active {
+      background-color: invert(var(--main-white));
+      color: invert(var(--main-dark-bg));
+      transition-property: background-color, color;
+      transition-duration: 0s;
+      
+  }
+  
+  .clock-button{
+      height: 25px;
+      margin-right: 0.5em;
+      color: var(--main-dark-bg);
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      overflow: hidden;
+      transition-property: background-color, color;
+      transition-duration: .5s;
+      transition-timing-function: ease;
+      
+  }
+  .clock-button:active {
+      transition-property: background-color, color;
+      transition-duration: 0s;
+  }
+  
+  
+  .inline{
+      display: inline-block;
+  }
+  
+  .SaveLogin {
+      display:flex;
+      align-items:center;
+      margin-bottom: 10px;
+  }
+  
+  .SaveLogin div{
+      text-align: center;
+      height: 25px;
+  }
+  
+  .SaveLogin div h3{
+      vertical-align: middle;
+      height: 25px;
+  }
+  
+  .SaveLogin input {
+      border: none;
+      border-radius: 6px;
+      height: 20px;
+      width: 20px;
+      margin-left: 15px;
+      margin-top: 1.5px;
+      background-color: var(--main-white);
+  }
+  
+  .timer_and_clock{
+      display:flex;
+      align-items:center;
+      margin-bottom: 10px;
+  
+  }
+  
+  .margin-bottom-15px{
+      margin-bottom: 15px;
+  }
+    /* not sure if I should add this or not...
+    .cookie-consent-modal {} */
+  .green{
+      background-color: green;
+      background: green;
+  }
+  
+  .red{
+      background-color: red;
+      background: red;
+  }
+  
+  .loading{
+      background-color: gray;
+      background: gray;
+  }
