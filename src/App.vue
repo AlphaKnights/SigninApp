@@ -104,8 +104,6 @@ export default {
         isValidText: function (evt) {
             evt = (evt) ? evt : window.event;
             var charCode = (evt.which) ? evt.which : evt.keyCode;
-            //
-            //!((charCode>=65&&charCode<=90)||(charCode>=97&&charCode<=122)||charCode==32||charCode==39||charCode==45||charCode==46||charCode==44)
             if (((charCode<65)||(charCode>122)||(charCode>90&&charCode<97))&&charCode!=32&&charCode!=39&&charCode!=45&&charCode!=46&&charCode!=44) {
                 evt.preventDefault();
             } else {
