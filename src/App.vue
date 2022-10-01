@@ -19,17 +19,21 @@
             </div>
             <div id="signed-in-page" v-if="page=='signed-in-page'">
                 <!-- <h2>Success!</h2> -->
-                <h3 style="margin-bottom: 10px;">You signed in successfully!<br> Please check in when you enter the meeting and check out when you leave!</h3>
-                <button class="clock-button" style="margin-bottom: 10px;" @click="toggleCheckIn()" v-if="page=='signed-in-page'" v-bind:class="{'green': checkedIn=='false', 'red': checkedIn=='true', 'loading': checkedIn=='loading'}">{{checkedInText}}</button>
+                <h3 style="margin-bottom: 10px;">You signed in successfully!<br> Please check in when you enter the
+                    meeting and check out when you leave!</h3>
+                <button class="clock-button" style="margin-bottom: 10px;" @click="toggleCheckIn()"
+                    v-if="page=='signed-in-page'"
+                    v-bind:class="{'green': checkedIn=='false', 'red': checkedIn=='true', 'loading': checkedIn=='loading'}">{{checkedInText}}</button>
             </div>
             <button class="submit-button" @click="login()" v-if="page=='signin-page'">Sign in</button>
             <button class="submit-button" @click="logout()" v-if="page=='signed-in-page'">Sign out</button>
+
         </div>
     </div>
-  </template>
+</template>
   
-  <script>
-  export default {
+<script>
+export default {
     user: 'app',
     data() {
         return {
@@ -41,10 +45,10 @@
             checkedInText: 'Check in',
             page: 'signin-page',
             title: 'Sign in',
-            api_url: 'https://api.alphaknights.xyz/'
+            api_url: 'https://api.alphaknights.xyz'
         }
     },
-  
+
     created() {
         if (document.cookie == "") return
         var cookies = document.cookie
@@ -62,121 +66,150 @@
                 this.$data.grade = cookies[key]
             }
             else if (key == 'signedin') {
-                if(cookies[key]=="true"){
-                  this.$data.signedIn = true;
-                  this.$data.page = 'signed-in-page'
-                  this.$data.title = "Welcome " + this.user;
+                if (cookies[key] == "true") {
+                    this.$data.signedIn = true;
+                    this.$data.page = 'signed-in-page'
+                    this.$data.title = "Welcome " + this.user;
                 }
             }
             else if (key == 'checkedin') {
                 this.$data.checkedIn = cookies[key];
-                if(this.$data.checkedIn=="loading"){
-                    this.$data.checkedIn= 'false'
-                    this.$data.checkedInText= 'Check in'
+                if (this.$data.checkedIn == "loading") {
+                    this.$data.checkedIn = 'false'
+                    this.$data.checkedInText = 'Check in'
                 }
-                else if(this.$data.checkedIn=="true"){
-                    this.$data.checkedInText= 'Check out'
+                else if (this.$data.checkedIn == "true") {
+                    this.$data.checkedInText = 'Check out'
                 }
-                else{
-                    this.$data.checkedIn= 'false'
-                    this.$data.checkedInText= 'Check in'
+                else {
+                    this.$data.checkedIn = 'false'
+                    this.$data.checkedInText = 'Check in'
                 }
             }
         }
     },
-  
+
     methods: {
-        dblogin(user, id, grade, callback){
+        dblogin(user, id, grade, callback) {
             let response
             const reqOpt = {
-                method: "POST",
-                headers: {"Access-Control-Allow-Origin": this.api_url}
+                method: "GET",
+                headers: { "Access-Control-Allow-Origin": this.api_url }
             }
-            fetch(this.api_url+"/entry/?name=" + user + "&id=" + id + "&grade=" + grade, reqOpt)
-                .then(async response => {
-                    return await response.json()
-                })
-                .then(json =>{
-                    callback(json)
-            })
-            return(response)
+            try {
+                fetch(this.api_url + "/entry/?name=" + user + "&id=" + id + "&grade=" + grade, reqOpt)
+                    .then(async response => {
+                        return await response.json()
+                    })
+                    .then(json => {
+                        callback(json)
+                    })
+                return (response)
+            } catch (error) {
+
+                return (null)
+            }
         },
-  
-        dblogout(user, id, grade, callback){
+
+        dblogout(user, id, grade, callback) {
             let response
             const reqOpt = {
-                method: "POST",
-                headers: {"Access-Control-Allow-Origin": this.api_url}
+                method: "GET",
+                headers: { "Access-Control-Allow-Origin": this.api_url }
             }
-            fetch(this.api_url+"/exit/?name=" + user + "&id=" + id + "&grade=" + grade, reqOpt)
-                .then(async response => {
-                    return await response.json()
-                })
-                .then(json =>{
-                    callback(json)
-            })
-            return(response)
+            try {
+                fetch(this.api_url + "/exit/?name=" + user + "&id=" + id + "&grade=" + grade, reqOpt)
+                    .then(async response => {
+                        return await response.json()
+                    })
+                    .then(json => {
+                        callback(json)
+                    })
+                return (response)
+            } catch (error) {
+                return (null)
+            }
+
         },
-  
+
         login() {
             this.$data.page = 'signed-in-page'
-            this.$data.signedIn=true
+            this.$data.signedIn = true
             this.updateCookies()
             this.$data.title = "Welcome " + this.user;
         },
-  
+
         logout() {
             this.$data.page = 'signin-page'
             this.$data.saveLogin = this.saveLogin
             this.$data.title = "Sign in";
-            this.$data.signedIn=false
+            this.$data.signedIn = false
             this.updateCookies()
         },
 
-        toggleCheckIn(){
-            if(this.checkedIn=="false"){
-                this.checkedIn="loading"
+        getData() {
+            const reqOpt = {
+                method: "GET",
+                headers: { "Access-Control-Allow-Origin": this.api_url }
+            }
+            fetch(this.api_url + "/flush/", reqOpt)
+                .then(async response => {
+                    return await response.json()
+                })
+                .then(json => {
+                    console.log(json)
+                })
+        },
+
+        toggleCheckIn() {
+            console.log("toggle")
+            if (this.checkedIn == "false") {
+                this.checkedIn = "loading"
                 this.checkedInText = "loading"
                 this.dblogin(this.user, this.id, this.grade, (d) => {
-                    if(d['code']==0){
-                        this.checkedIn="true"
-                        this.checkedInText = "Check out"
+                    if (d != null) {
+                        if (d['code'] == 0) {
+                            this.checkedIn = "true"
+                            this.checkedInText = "Check out"
+                        }
+                        else {
+                            alert("There was an error[" + d['code'] + "]: " + d['reason'])
+                        }
+                        this.updateCookies();
                     }
-                    else{
-                        alert("There was an error["+d['code']+"]: "+d['reason'])
-                    }
-                    this.updateCookies();
                 })
             }
-            else if(this.checkedIn=="true"){
-                this.checkedIn="loading"
+            else if (this.checkedIn == "true") {
+                this.checkedIn = "loading"
                 this.dblogout(this.user, this.id, this.grade, (d) => {
-                    if(d['code']==0){
-                        this.checkedIn="false"
-                        this.checkedInText = "Check in"
+                    if (d != null) {
+                        if (d['code'] == 0) {
+                            this.checkedIn = "false"
+                            this.checkedInText = "Check in"
+                        }
+                        this.updateCookies();
                     }
-                    this.updateCookies();
                 })
             }
         },
-  
+
         updateCookies() {
             document.cookie = 'user=' + this.user + ';Secure;SameSite=Strict;'
             document.cookie = 'id=' + this.id + ';Secure;SameSite=Strict;'
             document.cookie = 'grade=' + this.grade + ';Secure;SameSite=Strict;'
-            if(this.signedIn){
-              document.cookie = 'signedin=true;Secure;SameSite=Strict;'
+            if (this.signedIn) {
+                document.cookie = 'signedin=true;Secure;SameSite=Strict;'
             }
-            else{
-              document.cookie = 'signedin=false;Secure;SameSite=Strict;'
+            else {
+                document.cookie = 'signedin=false;Secure;SameSite=Strict;'
             }
             document.cookie = 'checkedin=' + this.checkedIn + ';Secure;SameSite=Strict;'
         }
     }
-  }
-  </script>
+}
+</script>
   
-  <style>
-  
-  </style>
+<style>
+
+</style>
   
