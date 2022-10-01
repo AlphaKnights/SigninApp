@@ -24,6 +24,8 @@
                 <button class="clock-button" style="margin-bottom: 10px;" @click="toggleCheckIn()"
                     v-if="page=='signed-in-page'"
                     v-bind:class="{'green': checkedIn=='false', 'red': checkedIn=='true', 'loading': checkedIn=='loading'}">{{checkedInText}}</button>
+                    <button class="submit-button" @click="getData()"
+                        v-if="user==`Alpha Knights`&&id==`6695`&&grade==`0`">Get Sign in data</button>
             </div>
             <button class="submit-button" @click="login()" v-if="page=='signin-page'">Sign in</button>
             <button class="submit-button" @click="logout()" v-if="page=='signed-in-page'">Sign out</button>
