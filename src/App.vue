@@ -8,14 +8,13 @@
                 <h3>Student ID:</h3>
                 <input class="text-input" v-model="id" type="text">
                 <h3>Grade:</h3>
-                <input class="text-input" v-model="grade" type="text">
-                <!-- < -->
-                <!-- <div class="SaveLogin">
-                    <div class="center inline">
-                        <h3>Save Login?</h3>
-                    </div>
-                    <input class="inline" v-model="saveLogin" type="checkbox">
-                </div> -->
+                <!-- <input class="text-input" v-model="grade" type="text"> -->
+                <select name="grade" id="grade-select" class="text-input" style="min-width: 50px;" v-model="grade">
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
             </div>
             <div id="signed-in-page" v-if="page=='signed-in-page'">
                 <!-- <h2>Success!</h2> -->
@@ -24,8 +23,8 @@
                 <button class="clock-button" style="margin-bottom: 10px;" @click="toggleCheckIn()"
                     v-if="page=='signed-in-page'"
                     v-bind:class="{'green': checkedIn=='false', 'red': checkedIn=='true', 'loading': checkedIn=='loading'}">{{checkedInText}}</button>
-                    <button class="submit-button" @click="getData()"
-                        v-if="user==`Alpha Knights`&&id==`6695`&&grade==`0`">Get Sign in data</button>
+                <button class="submit-button" @click="getData()"
+                    v-if="user==`Alpha Knights`&&id==`6695`&&grade==`0`">Get Sign in data</button>
             </div>
             <button class="submit-button" @click="login()" v-if="page=='signin-page'">Sign in</button>
             <button class="submit-button" @click="logout()" v-if="page=='signed-in-page'">Sign out</button>
@@ -33,8 +32,8 @@
         </div>
     </div>
 </template>
-  
 <script>
+// import Dropdown from 'vue-simple-search-dropdown';
 export default {
     user: 'app',
     data() {
