@@ -4,11 +4,10 @@
             <h1>{{title}}</h1>
             <div style="margin-bottom: 5px;" id="form" v-if="page=='signin-page'">
                 <h3>Name (First and Last):</h3>
-                <input class="text-input" v-model="user" type="text">
+                <input class="text-input" v-model="user" type="text" @keypress="isValidText($event)">
                 <h3>Student ID:</h3>
-                <input class="text-input" v-model="id" type="text">
+                <input class="text-input" v-model="id" type="text" @keypress="isNumber($event)">
                 <h3>Grade:</h3>
-                <!-- <input class="text-input" v-model="grade" type="text"> -->
                 <select name="grade" id="grade-select" class="text-input" style="min-width: 50px;" v-model="grade">
                     <option value="9">9</option>
                     <option value="10">10</option>
@@ -91,6 +90,29 @@ export default {
     },
 
     methods: {
+        isNumber: function (evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            console.log(charCode)
+            if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
+                evt.preventDefault();
+            } else {
+                return true;
+            }
+        },
+
+        isValidText: function (evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            //
+            //!((charCode>=65&&charCode<=90)||(charCode>=97&&charCode<=122)||charCode==32||charCode==39||charCode==45||charCode==46||charCode==44)
+            if (((charCode<65)||(charCode>122)||(charCode>90&&charCode<97))&&charCode!=32&&charCode!=39&&charCode!=45&&charCode!=46&&charCode!=44) {
+                evt.preventDefault();
+            } else {
+                return true;
+            }
+        },
+
         dblogin(user, id, grade, callback) {
             let response
             const reqOpt = {
